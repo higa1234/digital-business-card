@@ -21,8 +21,8 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm i -D tsx
-      - name: Set environment variables
-        run: echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env && \
-          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
       - name: Run batch file
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: npx tsx ./batch/index.ts

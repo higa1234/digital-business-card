@@ -2,8 +2,6 @@
  * 前日作成したusersとuser_skillを削除できるようにするバッチ処理
  * 毎朝6時にクーロン実行し、削除
  */
-import "dotenv/config";
-
 import { supabaseClient } from "../src/libs/supabaseClient";
 
 export async function deleteUserAndUserSkill() {
