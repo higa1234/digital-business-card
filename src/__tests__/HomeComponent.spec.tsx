@@ -5,16 +5,26 @@ import userEvent from "@testing-library/user-event";
 import { Home } from "../components/pages/Home";
 import { User } from "../domain/users";
 import { Register } from "../components/pages/Register";
+import type { RegisterFormData } from "../domain/form/RegisterFormData";
 
 // モック関数定義
 const mockNavigate = jest.fn();
 const mockGetUserById = jest.fn();
+const mockInsertUserAndUserSkill = jest.fn();
+const mockGetAllSkills = jest.fn();
 
 // ライブラリの関数モック
 // supabase関数
 jest.mock("../libs/users", () => {
   return {
     getUserById: (id: string) => mockGetUserById(id),
+    insertUserAndUserSkill: (data: RegisterFormData) =>
+      mockInsertUserAndUserSkill(data),
+  };
+});
+jest.mock("../libs/skills", () => {
+  return {
+    getAllSkills: () => mockGetAllSkills(),
   };
 });
 
@@ -45,6 +55,8 @@ beforeEach(() => {
       "https://x.com/yamada"
     )
   );
+  mockInsertUserAndUserSkill.mockResolvedValue({});
+  mockGetAllSkills.mockResolvedValue([]);
 });
 
 // 毎回テスト後
