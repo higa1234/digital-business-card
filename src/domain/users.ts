@@ -4,9 +4,9 @@ export class User {
     public name: string,
     public description: string,
     public skills: Array<{ id: string; name: string }>,
-    public github_id: string,
-    public qiita_id: string,
-    public x_id: string
+    public github_id?: string,
+    public qiita_id?: string,
+    public x_id?: string
   ) {}
 
   public static createUser(
@@ -23,24 +23,14 @@ export class User {
       name,
       description,
       skills,
-      formatGitHubUrl(github_id),
-      formatQiitaUrl(qiita_id),
-      formatXUrl(x_id)
+      formatSnsUrl("https://github.com", github_id),
+      formatSnsUrl("https://qiita.com", qiita_id),
+      formatSnsUrl("https://x.com", x_id)
     );
   }
 }
 
-function formatGitHubUrl(userPath: string) {
-  const GitHubUrl = "https://github.com/" + userPath;
-  return GitHubUrl;
-}
-
-function formatQiitaUrl(userPath: string) {
-  const qiitaUrl = "https://qiita.com/" + userPath;
-  return qiitaUrl;
-}
-
-function formatXUrl(userPath: string) {
-  const xUrl = "https://x.com/" + userPath;
-  return xUrl;
+function formatSnsUrl(baseUrl: string, userPath: string): string | undefined {
+  if (userPath === undefined || userPath.trim() === "") return undefined;
+  return `${baseUrl}/${userPath}`;
 }

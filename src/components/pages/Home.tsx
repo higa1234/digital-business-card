@@ -7,14 +7,14 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
 } from "@chakra-ui/react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { GrayBackgroundLayout } from "../layouts/GrayBackGroundLayout";
 import { WhiteCardLayout } from "../layouts/WhiteCardLayout";
+import { getUserById } from "../../libs/users";
 
 type UserId = {
   user_id: string;
@@ -28,22 +28,25 @@ export const Home: FC = memo(() => {
   } = useForm<UserId>();
   const navigate = useNavigate(); // useNavigateを使う
 
-  // 名刺を見る」ボタン押下時、処理
+  // 「名刺をみる」ボタン押下時、処理
   const onSubmit: SubmitHandler<UserId> = async (data) => {
     const { user_id } = data;
 
-    // select
+    // 存在チェック
+    const user = await getUserById(user_id);
 
-    // 画面遷移
-    navigate("/card/" + user_id);
+    if (user) {
+      // 画面遷移
+      navigate("/card/" + user_id);
+    }
   };
 
   return (
     <GrayBackgroundLayout>
-      <Heading>デジタル名刺アプリ</Heading>
+      <Heading data-testid="home-title">デジタル名刺アプリ</Heading>
       <WhiteCardLayout>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={8}>
+          <Stack spacing={8} data-testid="search-form">
             <FormControl isInvalid={!!errors.user_id}>
               <FormLabel>ID</FormLabel>
               <Input
@@ -52,7 +55,7 @@ export const Home: FC = memo(() => {
                   required: "IDを入力してください",
                 })}
               ></Input>
-              <FormErrorMessage>
+              <FormErrorMessage data-testid="error-user_id">
                 {errors.user_id && errors.user_id.message}
               </FormErrorMessage>
             </FormControl>
@@ -63,7 +66,7 @@ export const Home: FC = memo(() => {
         </form>
       </WhiteCardLayout>
       <Box w="100%" mt={4} textAlign="center">
-        <Link color="teal" href="/card/register">
+        <Link color="teal" to="/card/register">
           新規登録はこちら
         </Link>
       </Box>

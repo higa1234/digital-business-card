@@ -32,9 +32,9 @@ export async function getUserById(id: string): Promise<User | undefined> {
     data.name,
     data.description,
     data.skills,
-    data.github_id,
-    data.qiita_id,
-    data.x_id
+    data.github_id ?? undefined,
+    data.qiita_id ?? undefined,
+    data.x_id ?? undefined
   );
 }
 
@@ -46,9 +46,9 @@ export async function insertUserAndUserSkill(
     _name: registerFormData.name,
     _description: registerFormData.description,
     _skill_id: registerFormData.skill_id,
-    _github_id: registerFormData.github_id,
-    _qiita_id: registerFormData.qiita_id,
-    _x_id: registerFormData.x_id,
+    _github_id: registerFormData.github_id || null,
+    _qiita_id: registerFormData.qiita_id || null,
+    _x_id: registerFormData.x_id || null,
   });
   return { error };
 }

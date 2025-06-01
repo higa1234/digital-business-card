@@ -45,8 +45,10 @@ export const Card: FC = memo(() => {
     <>
       <GrayBackgroundLayout>
         <WhiteCardLayout>
-          <Stack spacing={6}>
-            <Heading size="md">{user?.name}</Heading>
+          <Stack spacing={6} data-testid="digital-card">
+            <Heading size="md" data-testid="user-name">
+              {user?.name}
+            </Heading>
             <Box>
               <Text fontWeight="bold">自己紹介</Text>
               <Text
@@ -54,13 +56,14 @@ export const Card: FC = memo(() => {
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(user?.description ?? ""),
                 }}
+                data-testid="user-description"
               ></Text>
             </Box>
             <Box>
               <Text fontWeight="bold">好きな技術</Text>
               <Stack spacing={1}>
                 {user?.skills.map((skill) => (
-                  <Text fontSize="lg" key={skill.id}>
+                  <Text fontSize="lg" key={skill.id} data-testid="user-skill">
                     {skill.name}
                   </Text>
                 ))}
@@ -86,7 +89,7 @@ export const Card: FC = memo(() => {
                   icon={<MdArticle />}
                   variant="ghost"
                   size="lg"
-                  fontSize="4xl" // ← アイコンサイズ
+                  fontSize="4xl"
                 />
               )}
               {user?.x_id && (
@@ -97,7 +100,7 @@ export const Card: FC = memo(() => {
                   icon={<FaTwitter />}
                   variant="ghost"
                   size="lg"
-                  fontSize="4xl" // ← アイコンサイズ
+                  fontSize="4xl"
                 />
               )}
             </HStack>

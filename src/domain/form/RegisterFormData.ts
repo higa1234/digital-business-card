@@ -5,9 +5,9 @@ export class RegisterFormData {
     public name: string,
     public description: string,
     public skill_id: number,
-    public github_id: string,
-    public qiita_id: string,
-    public x_id: string
+    public github_id?: string,
+    public qiita_id?: string,
+    public x_id?: string
   ) {}
 
   // メソッド
@@ -16,9 +16,9 @@ export class RegisterFormData {
     name: string,
     description: string,
     skill_id: number,
-    github_id: string,
-    qiita_id: string,
-    x_id: string
+    github_id?: string,
+    qiita_id?: string,
+    x_id?: string
   ): RegisterFormData {
     return new RegisterFormData(
       eitango_id,

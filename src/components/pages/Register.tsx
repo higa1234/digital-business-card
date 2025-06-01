@@ -29,7 +29,7 @@ export const Register: FC = memo(() => {
   } = useForm<RegisterFormData>();
   const navigate = useNavigate(); // useNavigateを使う
 
-  const { getSkillsData, skills } = useGetSkills();
+  const { getSkillsData, skills, loading } = useGetSkills();
   const { onClickRegister } = useRegister();
 
   // 初回
@@ -68,10 +68,10 @@ export const Register: FC = memo(() => {
 
   return (
     <GrayBackgroundLayout>
-      <Heading>新規名刺登録</Heading>
+      <Heading data-testid="register-title">新規名刺登録</Heading>
       <WhiteCardLayout>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={4}>
+          <Stack spacing={4} data-testid="register-form">
             <Text> * は必須項目です</Text>
             <FormControl isInvalid={!!errors.eitango_id}>
               <FormLabel>好きな英単語 *</FormLabel>
@@ -81,12 +81,12 @@ export const Register: FC = memo(() => {
                 {...register("eitango_id", {
                   required: "内容の入力は必須です",
                   pattern: {
-                    value: /^[A-Za-z]+$/,
+                    value: /^[A-Za-z_-]+$/,
                     message: "英字のみ入力してください",
                   },
                 })}
               ></Input>
-              <FormErrorMessage>
+              <FormErrorMessage data-testid="error-eitango_id">
                 {errors.eitango_id && errors.eitango_id.message}
               </FormErrorMessage>
             </FormControl>
@@ -98,7 +98,7 @@ export const Register: FC = memo(() => {
                   required: "内容の入力は必須です",
                 })}
               ></Input>
-              <FormErrorMessage>
+              <FormErrorMessage data-testid="error-name">
                 {errors.name && errors.name.message}
               </FormErrorMessage>
             </FormControl>
@@ -110,7 +110,7 @@ export const Register: FC = memo(() => {
                   required: "内容の入力は必須です",
                 })}
               ></Textarea>
-              <FormErrorMessage>
+              <FormErrorMessage data-testid="error-description">
                 {errors.description && errors.description.message}
               </FormErrorMessage>
             </FormControl>
@@ -122,54 +122,28 @@ export const Register: FC = memo(() => {
                   required: "内容の入力は必須です",
                 })}
               >
-                {skills.map((skill) => (
-                  <option key={skill.id} value={skill.id}>
-                    {skill.name}
-                  </option>
-                ))}
+                {!loading &&
+                  skills.map((skill) => (
+                    <option key={skill.id} value={skill.id}>
+                      {skill.name}
+                    </option>
+                  ))}
               </Select>
-              <FormErrorMessage>
+              <FormErrorMessage data-testid="error-skill">
                 {errors.skill_id && errors.skill_id.message}
               </FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={!!errors.github_id}>
+            <FormControl>
               <FormLabel>GitHub ID</FormLabel>
-              <Input
-                type="text"
-                placeholder="@は不要です"
-                {...register("github_id", {
-                  required: "内容の入力は必須です",
-                })}
-              ></Input>
-              <FormErrorMessage>
-                {errors.github_id && errors.github_id.message}
-              </FormErrorMessage>
+              <Input type="text" placeholder="@は不要です"></Input>
             </FormControl>
-            <FormControl isInvalid={!!errors.qiita_id}>
+            <FormControl>
               <FormLabel>Qiita ID</FormLabel>
-              <Input
-                type="text"
-                placeholder="@は不要です"
-                {...register("qiita_id", {
-                  required: "内容の入力は必須です",
-                })}
-              ></Input>
-              <FormErrorMessage>
-                {errors.qiita_id && errors.qiita_id.message}
-              </FormErrorMessage>
+              <Input type="text" placeholder="@は不要です"></Input>
             </FormControl>
-            <FormControl isInvalid={!!errors.x_id}>
+            <FormControl>
               <FormLabel>X(Twitter) ID</FormLabel>
-              <Input
-                type="text"
-                placeholder="@は不要です"
-                {...register("x_id", {
-                  required: "内容の入力は必須です",
-                })}
-              ></Input>
-              <FormErrorMessage>
-                {errors.x_id && errors.x_id.message}
-              </FormErrorMessage>
+              <Input type="text" placeholder="@は不要です"></Input>
             </FormControl>
 
             <Button type="submit" colorScheme="blue" mr={3}>
