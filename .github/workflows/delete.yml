@@ -1,0 +1,28 @@
+name: schedule delete
+
+on:
+  # 毎朝6時に自動実行
+  schedule:
+    - cron: "0 21 * * *" # ← JST 6:00 に対応（必要なら変更）
+  # 動作確認しやすいように手動起動をサポート
+  workflow_dispatch:
+
+jobs:
+  delete:
+    name: execute delete batch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Install dependencies
+        run: npm i -D tsx
+      - name: Set environment variables
+        run: echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env && \
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
+      - name: Run batch file
+        run: npx tsx ./batch/index.ts
