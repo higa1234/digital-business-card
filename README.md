@@ -1,55 +1,55 @@
-# React + TypeScript + Vite
+# デジタル名刺アプリ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+オンラインで名刺を共有・登録できる eb アプリケーションです。ユーザーはスキルや SNS 情報を登録し、URL を通じて自身のプロフィールを他者に簡単に共有できます。
 
-Currently, two official plugins are available:
+# 主な機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ユーザー登録（ID、名前、自己紹介、スキル、GitHub/Qiita/X のリンク）
+- 名刺ページの自動生成（共有用 URL あり）
+- 名刺の ID 検索
 
-## Expanding the ESLint configuration
+# 使用技術
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 言語：TypeScript
+- フロントエンド: React + Vite + Chakra UI(v2)
+- データベース: Supabase
+- テスト： Jest×Testing Library
+- その他： GitHub Actions（CI/CD 自動化）
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## セットアップ
+
+### 1. 環境変数の設定
+
+```
+git clone https://github.com/higa1234/digital-business-card.git
+cd digital-business-card
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. プロジェクトルートに `.env` ファイルを作成し、以下を記述
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```.env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
-# digital-business-card
+
+### 3. 開発環境の起動
+
+```bash
+npm install
+npm run dev
+```
+
+## テスト(Jest×Testing Library)
+
+```bash
+npm run test
+```
+
+## バージョン
+
+- npm ：9.6.4
+- node：v20.0.0
+
+## 更新日
+
+2025/06/02
