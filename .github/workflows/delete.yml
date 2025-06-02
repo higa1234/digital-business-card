@@ -3,7 +3,7 @@ name: schedule delete
 on:
   # 毎朝6時に自動実行
   schedule:
-    - cron: "0 21 * * *" # ← JST 6:00 に対応（必要なら変更）
+    - cron: "0 6 * * *" # ← JST 6:00 に対応（必要なら変更）
   # 動作確認しやすいように手動起動をサポート
   workflow_dispatch:
 

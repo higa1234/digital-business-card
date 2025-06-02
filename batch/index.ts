@@ -2,6 +2,8 @@
  * 前日作成したusersとuser_skillを削除できるようにするバッチ処理
  * 毎朝6時にクーロン実行し、削除
  */
+import "dotenv/config"; // これで .env を読み込む
+
 import { supabaseClient } from "../src/libs/supabaseClient";
 
 export async function deleteUserAndUserSkill() {
@@ -29,7 +31,7 @@ export async function deleteUserAndUserSkill() {
 
     if (!error) {
       console.log("削除に成功しました:");
-      console.log("削除件数:", data.length ?? 0);
+      console.log("削除件数:", data?.length ?? 0);
       console.log("削除したユーザーID一覧:", data);
     } else {
       console.error("Supabase RPC error:", error.message); // ← エラー内容がここに入る
